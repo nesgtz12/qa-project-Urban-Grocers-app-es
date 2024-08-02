@@ -34,6 +34,7 @@ def test_create_kit_name_length_0(auth_token):
 def test_create_kit_name_length_512(auth_token):
     kit_body = data.get_kit_body("Abcd" * 128)
     negative_assert(kit_body, auth_token)
+    print(kit_body)
 
 def test_create_kit_name_special_chars(auth_token):
     kit_body = data.get_kit_body("!@#$%^&*()")
@@ -54,3 +55,5 @@ def test_create_kit_no_name(auth_token):
 def test_create_kit_name_as_number(auth_token):
     kit_body = {"name": 123}
     negative_assert(kit_body, auth_token)
+# Nota del auditor: test_create_kit_name_length_512: La prueba intenta crear un kit con un nombre de 512 caracteres. En este caso, su prueba está fallando porque el resultado esperado es el error 400 y está obteniendo el código 200 como respuesta en su prueba. Verifique si realmente se están pasando 512 caracteres en la función. 
+#Lo mismo ocurre con las pruebas test_create_kit_name_as_number y test_create_kit_no_name. NOTAS DEL ESTUDIANTE:Estas pruebas estan bien debido a que no esta bien porgramado los requisitos en el codigo, y por ende estan destinadas a fallar, esa es la razon por la que no corresponde los estatus de respuesta de los servidores, por ejemplo el la prueba de los 512: da respuesta 201 en vez de 400, ya que no funciona la restriccion de que no deberia de poder introducirse un nombre de mas de 512 caracteres, pero vemos que si es el caso
